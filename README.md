@@ -2,11 +2,11 @@
 
 Vincenzo Petito
 
-I provided two codes because for the first code i developed i was assuming something that finally was not true and stopped me from using it. So, in order to provide a code that does some training and predictions i developed a second project trying to reuse what i already did.
+I provided two codes because for the first code I developed I was assuming something that finally was not true and stopped me from using it. So, in order to provide a code that does some training and predictions I developed a second project trying to reuse what I already did.
 
 ### Requirements
 
-In order to execute the codes you will need to install *Keras *and *Tensorflow *(with all their dependencies):
+In order to execute the codes you will need to install *Keras* nd *Tensorflow* with all their dependencies):
 
 *pip install TensorFlow*
 
@@ -22,21 +22,21 @@ The code "ML1" is the code relative to the project I submitted on aulaweb as pro
 
 What i wanted to do was to find addresses in the blockchain which could be used as indicators of the bitcoin price future trend.
 
-In order to do this, i downloaded a dataset containing bitcoin prices from [here](https://www.kaggle.com/mczielinski/bitcoin-historical-data/data) (*bitstampUSD_1-min_data_2012-01-01_to_2018-01-08.csv*) , and the entire blockchain using [Bitcoin Core](https://bitcoin.org/it/scarica). 
+In order to do this, I downloaded a dataset containing bitcoin prices from [here](https://www.kaggle.com/mczielinski/bitcoin-historical-data/data) (*bitstampUSD_1-min_data_2012-01-01_to_2018-01-08.csv*) , and the entire blockchain using [Bitcoin Core](https://bitcoin.org/it/scarica). 
 
-Then I developed a java code (folder *javaBlockchainParser*) to extract the informations i needed from the blockchain: foreach block i extracted all the addresses that made transactions and saved them in some CSVs (one csv file every 10 millions transaction). I used  [bitcoinj ](https://github.com/bitcoinj/bitcoinj)and [OpenCSV 4.1](https://mvnrepository.com/artifact/com.opencsv/opencsv/4.1) libraries.
+Then I developed a java code (folder *javaBlockchainParser*) to extract the informations i needed from the blockchain: foreach block I extracted all the addresses that made transactions and saved them in some CSVs (one csv file every 10 millions transaction). I used  [bitcoinj ](https://github.com/bitcoinj/bitcoinj)and [OpenCSV 4.1](https://mvnrepository.com/artifact/com.opencsv/opencsv/4.1) libraries.
 
-Finally imported the CSVs in Hive, where i executed some preprocessing of the data (available in SQL/queries.sql).
+Finally imported the CSVs in Hive, where I executed some preprocessing of the data (available in SQL/queries.sql).
 
 More precisely  grouped addresses by dates, summing up the number of transactions they made in each day. There were too much addresses to manage for the machine learning part and in order to cut their number down I selected the 16384 addresses that made more transactions in the period from 01-07-17 to 15-08-17 which was the training date interval, and extracted the transaction of those addresses from the interval that goes from 16-08-17 to 15-09-17 as the test set. 
 
-That’s when i found out that it was not going to work: i found only one day were some of the top addresses executed some transactions and nothing else. It was not enough so i had to stop the project without being able to execute predictions on the test set.
+That’s when I found out that it was not going to work: I found only one day were some of the top addresses executed some transactions and nothing else. It was not enough so i had to stop the project without being able to execute predictions on the test set.
 
-The code is not "refined", I stopped working on it as soon as I understood that it was useless. I’m including it just because i’ve spent some time on it.
+The code is not "refined", I stopped working on it as soon as I understood that it was useless. I’m including it just because I’ve spent some time on it.
 
 #### ML2
 
-In order to be able to do some predictions and evaluate a model, i tried to solve a simpler problem which was to train a network to predict the bitcoin trend in the next 15 minutes, given the past 300 minutes (1 minute ticks). 
+In order to be able to do some predictions and evaluate a model, I tried to solve a simpler problem which was to train a network to predict the bitcoin trend in the next 15 minutes, given the past 300 minutes (1 minute ticks). 
 
 I used the same dataset containing bitcoin values in 1 min ticks as before. I choose to use a 1D Convolutional Neural Network because the input data has some "structural" information: adjacent candles have some sort of correlation.
 
